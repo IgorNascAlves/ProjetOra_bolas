@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <vector>
-#include <fstream>
+
 
 using namespace std;
 
@@ -28,17 +27,22 @@ void MainWindow::lerArquivo(){
     }
 }
 
-void MainWindow::PlotGrafico(QVector<double> vx, QVector<double> vy){
+void MainWindow::PlotGrafico(QVector<double> vx, QVector<double> vy,QString x, QString y, int i){
     // create graph and assign data to it:
     ui->qcustomplot->addGraph();
+    if(i == 0)
+        ui->qcustomplot->graph(i)->setPen(QPen(Qt::green));
+    if(i == 1)
+        ui->qcustomplot->graph(i)->setPen(QPen(Qt::blue));
+    if(i == 2)
+        ui->qcustomplot->graph(i)->setPen(QPen(Qt::red));
     ui->qcustomplot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
-    ui->qcustomplot->graph(0)->setPen(QPen(Qt::blue));
     //ui->qcustomplot->graph(0)->setLineStyle(QCPGraph::lsNone);
-    ui->qcustomplot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlusCircle, 4));
-    ui->qcustomplot->graph(0)->setData(vx,vy);
+    ui->qcustomplot->graph(i)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlusCircle, 4));
+    ui->qcustomplot->graph(i)->setData(vx,vy);
     // give the axes some labels:
-    ui->qcustomplot->xAxis->setLabel("x");
-    ui->qcustomplot->yAxis->setLabel("y");
+    ui->qcustomplot->xAxis->setLabel(x);
+    ui->qcustomplot->yAxis->setLabel(y);
     // set axes ranges, so we see all data:
     ui->qcustomplot->xAxis->setRange(vx.first(), vx.last());
     ui->qcustomplot->yAxis->setRange(vy.first(), vy.last());
@@ -51,7 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     lerArquivo();
-    PlotGrafico(vx,vy);
+    PlotGrafico(vx,vy,"x","y",0);
+    PlotGrafico(vx,vt,"x","t",1);
+    PlotGrafico(vy,vt,"y","t",2);
 
 }
 
