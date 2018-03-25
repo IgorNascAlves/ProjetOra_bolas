@@ -4,14 +4,10 @@
 #include <fstream>
 
 using namespace std;
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
 
+void MainWindow::lerArquivo(){
     vector<string> v;
-    QVector<double> vt,vx,vy;
+
     ifstream f;
     f.open("teste.txt", fstream::in);
     //cout<<f.is_open()<<endl;
@@ -30,7 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
         vx.push_back((v[i+1][1]-48)+((v[i+1][5]-48)/10.0)+((v[i+1][7]-48)/100.0)+((v[i+1][9]-48)/1000.0));
         vy.push_back((v[i+2][1]-48)+((v[i+2][5]-48)/10.0)+((v[i+2][7]-48)/100.0)+((v[i+2][9]-48)/1000.0));
     }
+}
 
+void MainWindow::PlotGrafico(QVector<double> vx, QVector<double> vy){
     // create graph and assign data to it:
     ui->qcustomplot->addGraph();
     ui->qcustomplot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
@@ -45,6 +43,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->qcustomplot->xAxis->setRange(vx.first(), vx.last());
     ui->qcustomplot->yAxis->setRange(vy.first(), vy.last());
     ui->qcustomplot->replot();
+}
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    lerArquivo();
+    PlotGrafico(vx,vy);
+
 }
 
 MainWindow::~MainWindow()
