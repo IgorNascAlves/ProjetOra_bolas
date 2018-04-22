@@ -79,6 +79,6 @@ int main(){
     entradaHTML(vt,vx,vy);
     //    for(int i=0;i<vt.size();i++)
     //        cout<<vt[i]<<" "<<vx[i]<<" "<<vy[i]<<endl;
-    system("firefox \"index.html\"");
+    system("start index.html");
     return 0;
 }
