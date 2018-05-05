@@ -76,5 +76,6 @@ int main(){
         vp.push_back(sqrt(pow(vx[i],2)+pow(vy[i],2)));
     entradaHTML(vt,vp,vx);
     system("firefox \"index.html\"");
+    system("start index.html");
     return 0;
 }
