@@ -4,13 +4,8 @@
 #include<fstream>
 #include<iostream>
 #include<cstdlib>
+#include<math.h>
 using namespace std;
-struct _pontos{
-    char nome[50];
-    float x;
-    float y;
-};
-typedef struct _pontos pontos;
 void criaHTML(char* str){
 
     FILE * Stream;
@@ -76,9 +71,10 @@ void lerArquivo(vector<double> &vt,vector<double> &vx,vector<double> &vy){
 int main(){
     vector<double> vt,vx,vy;
     lerArquivo(vt,vx,vy);
-    entradaHTML(vt,vx,vy);
-    //    for(int i=0;i<vt.size();i++)
-    //        cout<<vt[i]<<" "<<vx[i]<<" "<<vy[i]<<endl;
+    vector<double> vp;
+    for(int i=0;i<vt.size();i++)
+        vp.push_back(sqrt(pow(vx[i],2)+pow(vy[i],2)));
+    entradaHTML(vt,vp,vx);
     system("firefox \"index.html\"");
     return 0;
 }
